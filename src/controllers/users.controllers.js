@@ -17,7 +17,7 @@ export const getSingleProduct = async (req, res) => {
         const getProduct = await pool.query('SELECT * FROM products WHERE product_id = $1', [id])
         // res.json(getProduct)
         if(getProduct.rowCount === 0) {
-            res.status(404).json({ success:false, message: "User not found."})
+            res.status(404).json({ success:false, message: "Product not found."})
         } else {
             res.status(200).json({success: true, data: getProduct.rows})
         }
@@ -42,7 +42,7 @@ export const createNewProduct = async(req, res) => {
 
         const insertProducts = await pool.query("INSERT INTO products (productThumbnail, productTitle, productDescription, productCost, onOffer) VALUES ($1, $2, $3, $4,$5)", [productThumbnail, productTitle, productDescription, productCost, onOffer])
         if(insertProducts.rowCount === 1) {
-            res.status(201).json({success: true, message: "User inserted successfuly."})
+            res.status(201).json({success: true, message: "Product inserted successfuly."})
         } else {
             res.send(400).json({success:false, message: "Cannot store duplicate products"})
         }
@@ -82,7 +82,7 @@ export const updateSingleProduct = async (req, res) => {
         }
 
         if(updateProducts.rowCount === 1) {
-            res.status(200).json({success: true, message: "product updated successfully."})
+            res.status(200).json({success: true, message: "Product updated successfully."})
         } else {
             res.status(400).json({success: false, message: "Invalid product."})
         }
@@ -100,9 +100,9 @@ export const deleteProduct = async (req, res)=> {
     try{
         const deleteProduct = await pool.query("DELETE FROM products WHERE product_id = $1", [id])
         if (deleteProduct.rowCount === 1) {
-            res.status(200).json({ success: true, message: "User successfully deleted."})
+            res.status(200).json({ success: true, message: "Product deleted successfully."})
         } else {
-            res.status(400).json({success:false, message: "Invalid user."})
+            res.status(400).json({success:false, message: "Invalid product."})
         }
 
     } catch(error) {
